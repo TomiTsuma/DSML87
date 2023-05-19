@@ -1,0 +1,17 @@
+soilProperty,Value_1,Value_2,Value_3
+boron,0.5,0.8,1
+calcium_%,40,60,65
+cec,15,20,30
+copper,1,1.5,8
+iron,30,50,300
+magnesium_%,8,12,15
+manganese,10,20,100
+potassium_%,1.5,2,5
+ph,5.2,5.86,6.4
+organic_carbon,1,2,4
+organicMatter,1.72,3.44,6.88
+sulphur,5,10,20
+total_nitrogen,0.1,0.2,0.25
+zinc,2,4,10
+phosphorus,10,30,50
+c/nratio,10,15,25
