@@ -6,11 +6,11 @@ import rpy2.robjects as robjects
 from rpy2.robjects import pandas2ri
 
 
-averaged_spectra = pd.read_csv("inputFiles/spectraldata.csv", engine="c")
+averaged_spectra = pd.read_csv("outputFiles/spc.csv", engine="c")
 for col in averaged_spectra.columns:
     if ('Unnamed' in col):
         averaged_spectra = averaged_spectra.drop(col, axis=1)
-averaged_spectra.to_csv("inputFiles/spectraldata.csv")
+averaged_spectra.to_csv("outputFiles/spc.csv")
 
 r = robjects.r
 r['source']('splits.R')
@@ -25,5 +25,5 @@ except:
 
 pandas2ri.activate()
 
-split("D://CropNutsDocuments/DS-ML87/inputFiles/spectraldata.csv",
+split("D://CropNutsDocuments/DS-ML87/outputFiles/spc.csv",
       "D://CropNutsDocuments/DS-ML87/outputFiles/rds", "D://CropNutsDocuments/DS-ML87/outputFiles/splits")
