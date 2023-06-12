@@ -4,26 +4,28 @@ import notebook
 from pathlib import Path
 import rpy2.robjects as robjects
 from rpy2.robjects import pandas2ri
+import subprocess
 
 
-averaged_spectra = pd.read_csv("outputFiles/spc.csv", engine="c")
-for col in averaged_spectra.columns:
-    if ('Unnamed' in col):
-        averaged_spectra = averaged_spectra.drop(col, axis=1)
-averaged_spectra.to_csv("outputFiles/spc.csv")
+def split_data():
+    averaged_spectra = pd.read_csv(
+        "/home/tom/DSML125/DSML87/outputFiles/spc.csv", engine="c")
+    for col in averaged_spectra.columns:
+        if ('Unnamed' in col):
+            averaged_spectra = averaged_spectra.drop(col, axis=1)
+    averaged_spectra.to_csv("/home/tom/DSML125/DSML87/outputFiles/spc.csv")
 
-r = robjects.r
-r['source']('splits.R')
-split = robjects.globalenv['split']
+    r = robjects.r
+    r['source']('/home/tom/DSML125/DSML87/splits.r')
+    split = robjects.globalenv['split']
+    try:
+        os.makedirs("/home/tom/DSML125/DSML87/outputFiles/splits",
+                    exist_ok=True)
+        os.makedirs("/home/tom/DSML125/DSML87/outputFiles/rds", exist_ok=True)
+    except Exception as e:
+        print(e)
 
-try:
-    os.mkdir("./outputFiles/splits")
-    os.mkdir("./outputFiles/rds")
-except:
-    print()
+    pandas2ri.activate()
 
-
-pandas2ri.activate()
-
-split("D://CropNutsDocuments/DS-ML87/outputFiles/spc.csv",
-      "D://CropNutsDocuments/DS-ML87/outputFiles/rds", "D://CropNutsDocuments/DS-ML87/outputFiles/splits")
+    split("/home/tom/DSML125/DSML87/outputFiles/spc.csv",
+          "/home/tom/DSML125/DSML87/outputFiles/rds", "/home/tom/DSML125/DSML87/outputFiles/splits")

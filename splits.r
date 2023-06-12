@@ -1,8 +1,24 @@
+# options(repos = "https://cran.r-project.org")
+
+# install.packages('prospectr')
+# install.packages('data.table')
+# install.packages('ggplot2')
+# install.packages('stringr')
+# install.packages('terra')
+# install.packages('sp')
+# install.packages('units')
+# install.packages('sf')
+# install.packages('raster')
+# install.packages('reshape2')
+# install.packages('plyr')
+# install.packages('clhs')
+
 library(prospectr)
 library(data.table)
-library(clhs)
 library(ggplot2)
 library(stringr)
+library(terra)
+library(clhs)
 
 chemicals <- c('boron', 'calcium', 'clay', 'copper', 'ec_salts',
                'exchangeable_acidity', 'iron', 'magnesium', 'manganese', 'phosphorus',
@@ -48,16 +64,19 @@ split <- function(path_to_spc, path_to_rds, path_to_splits){
     
     # calculate 10% of total number of samples
     n_sel <- round(nrow(pca_sub) * 0.15)
-    
+    print(n_sel)
     # convert to dataframe
     r.df <- data.frame(pca_sub)
     
     # assign sample codes
     rownames(r.df) <- rownames(df)
     head(r.df)
+    # print(r.df)
     
     # perform conditioned Latin Hypercube Sampling
     res_test<-clhs(x=r.df, size=n_sel, iter=10000, simple = FALSE) 
+    
+    # res_test <- randomLHS(n = nrow(r.df), k = n_sel)
     res_test$index_samples
     test<-r.df[res_test$index_samples,]
     head(test)
@@ -134,3 +153,6 @@ split <- function(path_to_spc, path_to_rds, path_to_splits){
     
   }
 }
+
+split("/home/tom/DSML125/DSML87/outputFiles/spc.csv",
+          "/home/tom/DSML125/DSML87/outputFiles/rds", "/home/tom/DSML125/DSML87/outputFiles/splits")
