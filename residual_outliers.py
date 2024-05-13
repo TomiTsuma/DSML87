@@ -21,29 +21,6 @@ from DSML87.data import load_residual_outliers
 #     )
 
 
-uncleaned_wetchem_df = pd.read_csv(
-    "/home/tom/DSML125/inputFiles/uncleaned_wetchem.csv")
-uncleaned_wetchem_df = uncleaned_wetchem_df.rename(
-    columns={"Unnamed: 0": "sample_code"})
-uncleaned_wetchem_df.set_index("sample_code")
-for column in uncleaned_wetchem_df.columns:
-    if (column != 'sample_code'):
-        vals = []
-        for value in uncleaned_wetchem_df[column].values:
-            if (value is not None):
-                value = str(value)
-                value = value.replace(">", "").replace(
-                    "<", "").replace("...", "").strip()
-                value = float(value)
-            vals.append(value)
-        uncleaned_wetchem_df[column] = vals
-
-wetchem_df = uncleaned_wetchem_df.copy(deep=True)
-wetchem_df.set_index("sample_code")
-
-wetchem_df.to_csv("/home/tom/DSML125/DSML87/inputFiles/cleaned_wetchem.csv")
-
-
 def residual_outliers(chemicals, version):
     print("Getting residual outliers")
     spectra = pd.read_csv(
