@@ -72,4 +72,3 @@ def load_residual_outliers():
     return redbooth_outliers, pcc_dict
 
 
-load_residual_outliers()
