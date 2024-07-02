@@ -21,19 +21,13 @@ from DSML87.data import load_residual_outliers
 #     )
 
 
-def residual_outliers(version):
-    chemicals = ['aluminium', 
-            'phosphorus', 'ph', 'exchangeable_acidity', 'calcium', 'magnesium','organic_carbon',
-              'sulphur', 'sodium', 'iron', 'manganese', 'boron', 'copper', 'zinc', 'total_nitrogen', 'potassium',
-             'ec_salts', 'organic_carbon', 'cec', 'sand', 'silt', 'clay']
-    
+def residual_outliers(chemicals, version):
     print("Getting residual outliers")
     print("These are the chemicals for residual outliers", chemicals)
     spectra = pd.read_csv(
         '/home/tom/DSML125/outputFiles/spectraldata.csv', index_col=0, engine='c')
     wetchem_df = pd.read_csv(
         "/home/tom/DSML125/DSML87/inputFiles/uncleaned_wetchem.csv")
-    chemicals = [i for i in chemicals if i in wetchem_df.columns]
     redbooth_outliers_dict, pcc_classes_dict = load_residual_outliers()
 
     os.makedirs('/home/tom/DSML125/DSML87/outputFiles/PCC1', exist_ok=True)
