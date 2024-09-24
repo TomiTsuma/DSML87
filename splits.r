@@ -23,8 +23,13 @@ library(clhs)
 # chemicals <- c('boron', 'calcium', 'clay', 'copper', 'ec_salts',
 #                'exchangeable_acidity', 'iron', 'magnesium', 'manganese', 'phosphorus',
 #                'potassium', 'sand', 'silt', 'sodium', 'sulphur', 'zinc', 'ph')
+# Read the CSV file
+# Replace "your_file.csv" with the actual path to your CSV file
+data <- read.csv("/home/tom/DSML125/modeling-instructions.csv", stringsAsFactors = FALSE)
 
-chemicals <- c('calcium','ph')
+# Extract the "chemicals" column and store it as an array
+chemicals <- as.array(data$chemical)
+
 
 args <- commandArgs(trailingOnly = TRUE)
 chem <- args[1]
