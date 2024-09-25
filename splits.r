@@ -25,7 +25,7 @@ library(clhs)
 #                'potassium', 'sand', 'silt', 'sodium', 'sulphur', 'zinc', 'ph')
 # Read the CSV file
 # Replace "your_file.csv" with the actual path to your CSV file
-data <- read.csv("/home/tom/DSML125/modeling-instructions.csv", stringsAsFactors = FALSE)
+data <- read.csv("/home/tom/DSML125/inputFiles/modeling-instructions.csv", stringsAsFactors = FALSE)
 
 # Extract the "chemicals" column and store it as an array
 chemicals <- as.array(data$chemical)
