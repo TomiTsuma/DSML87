@@ -54,7 +54,23 @@ def residual_outliers(chemicals, version):
 
         df.to_csv(
             f"/home/tom/DSML125/DSML87/outputFiles/PCC_Classes/{chem}.csv")
-        if (chem in redbooth_outliers_dict.keys()):
+        if chem == 'organic_carbon':
+            df['residual_outlier_limit'] = df[chem].apply(lambda x: 0.2 * x if x > 1.5 else None)
+            df.loc[df[chem] < 1.5, 'residual_outlier_limit'] = 0.3
+            df['Difference'] = abs(df['Difference'])
+            df.loc[df['Difference'] <= df['residual_outlier_limit'],'PCC_Class'] = 1
+            df.loc[df['Difference'] > df['residual_outlier_limit'],'PCC_Class'] = 3
+            df.to_csv(f"/home/tom/DSML125/DSML87/outputFiles/PCC_Classes/{chem}.csv")
+            spectra.loc[spectra.index.isin(df.loc[df['Difference'] <= df['residual_outlier_limit']].sample_code)].to_csv(f'/home/tom/DSML125/DSML87/outputFiles/PCC1/{chem}.csv')
+        elif chem == 'total_nitrogen':
+            df['residual_outlier_limit'] = df[chem].apply(lambda x: 0.2 * x if x > 0.15 else None)
+            df.loc[df[chem] < 0.15, 'residual_outlier_limit'] = 0.03
+            df['Difference'] = abs(df['Difference'])
+            df.loc[df['Difference'] <= df['residual_outlier_limit'],'PCC_Class'] = 1
+            df.loc[df['Difference'] > df['residual_outlier_limit'],'PCC_Class'] = 3
+            df.to_csv(f"/home/tom/DSML125/DSML87/outputFiles/PCC_Classes/{chem}.csv")
+            spectra.loc[spectra.index.isin(df.loc[df['Difference'] > df['residual_outlier_limit']].sample_code)].to_csv(f'/home/tom/DSML125/DSML87/outputFiles/PCC3/{chem}.csv')
+        elif (chem in redbooth_outliers_dict.keys()):
             print(chem, "In Redbooth Outliers")
             lower = redbooth_outliers_dict[chem][0]
             upper = redbooth_outliers_dict[chem][1]
@@ -109,6 +125,8 @@ def residual_outliers(chemicals, version):
                 spectra.loc[spectra.index.isin(df.loc[df['PCC_Class'] >= 3]['sample_code'])].to_csv(
                     f'/home/tom/DSML125/DSML87/outputFiles/PCC3/{chem}.csv')
 
+        
+
         else:
             continue
 
@@ -139,3 +157,5 @@ def residual_outliers(chemicals, version):
     print(wetchem.index)
     wetchem = wetchem.loc[wetchem.index.isin(spectra.index)]
     wetchem.to_csv('/home/tom/DSML125/DSML87/inputFiles/wetchem.csv')
+
+
