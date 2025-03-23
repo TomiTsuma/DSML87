@@ -29,7 +29,7 @@ def load_residual_outliers():
     all_chemicals = ['aluminium',
                      'phosphorus', 'ph', 'exchangeable_acidity', 'calcium', 'magnesium',
                      'sulphur', 'sodium', 'iron', 'manganese', 'boron', 'copper', 'zinc', 'total_nitrogen', 'potassium',
-                     'ec_salts', 'organic_carbon', 'cec', 'sand', 'silt', 'clay']
+                     'ec_salts', 'organic_carbon', 'cec', 'sand', 'silt', 'clay', 'total_carbon']
 
     undefined_chems = [i for i in all_chemicals if (
         i not in pcc_elements and i not in redbooth_properties)]

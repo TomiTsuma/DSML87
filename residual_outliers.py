@@ -62,6 +62,7 @@ def residual_outliers(chemicals, version):
             df.loc[df['Difference'] > df['residual_outlier_limit'],'PCC_Class'] = 3
             df.to_csv(f"/home/tom/DSML125/DSML87/outputFiles/PCC_Classes/{chem}.csv")
             spectra.loc[spectra.index.isin(df.loc[df['Difference'] <= df['residual_outlier_limit']].sample_code)].to_csv(f'/home/tom/DSML125/DSML87/outputFiles/PCC1/{chem}.csv')
+            spectra.loc[spectra.index.isin(df.loc[df['Difference'] > df['residual_outlier_limit']].sample_code)].to_csv(f'/home/tom/DSML125/DSML87/outputFiles/PCC3/{chem}.csv')
         elif chem == 'total_nitrogen':
             df['Difference'] = abs(df['Difference'])
             df.loc[df['Difference'] < 1,'PCC_Class'] = 1
